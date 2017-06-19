@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Machine</string>
+    <string name="current_queue">当前排队数</string>
+    <string name="current_haircut">当前排队数</string>
+    <string name="price">票价10元</string>
+    <string name="scan">手机扫一扫，在线购票</string>
+    <string name="hairdresser">理发师  %1$s </string>
+</resources>

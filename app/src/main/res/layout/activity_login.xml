@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qc.machine.ui.activity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y607"
+        android:background="@color/colorRed">
+
+        <ImageView
+            android:layout_width="@dimen/x157"
+            android:layout_height="@dimen/y110"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_logo"/>
+
+        <RelativeLayout
+            android:layout_width="@dimen/x611"
+            android:layout_height="@dimen/y97"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/y47">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edittext"
+                android:gravity="center"
+                android:hint="请输入密钥"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textColor="#000000"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/y57"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/iocn_key"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="@dimen/x611"
+        android:layout_height="@dimen/y97"
+        android:layout_below="@id/top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y54"
+        android:background="@drawable/shape_button_login"
+        android:text="登录"
+        android:textColor="#ffffff"/>
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="@dimen/x611"
+        android:layout_height="@dimen/y97"
+        android:layout_below="@id/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y57"
+        android:background="@drawable/shape_button_logout"
+        android:text="退出"
+        android:textColor="#bf4740"/>
+
+</RelativeLayout>
