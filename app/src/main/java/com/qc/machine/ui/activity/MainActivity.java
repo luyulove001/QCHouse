@@ -20,6 +20,9 @@ import com.qc.machine.base.BaseActivity;
 import com.qc.machine.model.HairdresserInfoModel;
 import com.qc.machine.model.MachineInfoModel;
 import com.qc.machine.utils.AsyncImageLoader;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,7 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 import talex.zsw.baselibrary.util.klog.KLog;
+import talex.zsw.baselibrary.view.JCVideoPlayer.JCVideoPlayer;
 import talex.zsw.baselibrary.widget.CircleImageView;
 
 public class MainActivity extends BaseActivity {
@@ -103,6 +107,10 @@ public class MainActivity extends BaseActivity {
     TextView tvCommentTime;
     @Bind(R.id.comment_disc)
     TextView tvCommentDisc;
+    @Bind(R.id.ad_banner)
+    Banner banner;
+//    @Bind(R.id.ad_player)
+//    JCVideoPlayer player;
 
     private String mShopId;
     private String mSn;
@@ -121,7 +129,9 @@ public class MainActivity extends BaseActivity {
                         } else if ("1".equals(model.getEndflag())) {
                         }
                         if ("1".equals(model.getAdtype())) {
-                            //TODO 轮播图
+                            banner.setVisibility(View.VISIBLE);
+                            banner.setImages(model.getPics());
+                            banner.start();
                         } else if ("2".equals(model.getAdtype())) {
                             //TODO 视频
                         }
@@ -211,6 +221,16 @@ public class MainActivity extends BaseActivity {
         setRingColor(ring2, getResources().getColor(R.color.color_good));
         setRingColor(ring3, getResources().getColor(R.color.color_bad));
         setRingColor(ring4, getResources().getColor(R.color.color_comment));
+        initBanner();
+    }
+
+    private void initBanner() {
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        banner.setImageLoader(new AsyncImageLoader());
+        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.isAutoPlay(true);
+        banner.setDelayTime(3000);
+        banner.setIndicatorGravity(BannerConfig.CENTER);
     }
 
     @Override

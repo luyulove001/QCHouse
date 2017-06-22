@@ -1,10 +1,15 @@
 package com.qc.machine.utils;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.qc.machine.model.MachineInfoModel;
+import com.youth.banner.loader.ImageLoader;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -17,7 +22,7 @@ import java.util.HashMap;
 /**
  * 对于图片异步处理类
  */
-public class AsyncImageLoader {
+public class AsyncImageLoader extends ImageLoader{
 
     static ImageView singImageView; //针对于单张图片异步加载
     private static HashMap<String, SoftReference<Drawable>> singleImageCache = null;
@@ -100,5 +105,11 @@ public class AsyncImageLoader {
 
             ;
         }.start();
+    }
+
+    @Override
+    public void displayImage(Context context, Object path, ImageView imageView) {
+        MachineInfoModel.Pic picPath = (MachineInfoModel.Pic) path;
+        Glide.with(context).load(picPath.getPic()).into(imageView);
     }
 }

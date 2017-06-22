@@ -1,6 +1,7 @@
 package com.qc.machine.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/19.
@@ -15,7 +16,7 @@ public class MachineInfoModel implements Serializable {
     private String price;
     private String findBy;
     private String mid;
-    private String[] pics1;
+    private List<Pic> pics;
 
     public String getActprice() {
         return actprice;
@@ -49,12 +50,12 @@ public class MachineInfoModel implements Serializable {
         this.mid = mid;
     }
 
-    public String[] getPics1() {
-        return pics1;
+    public List<Pic> getPics() {
+        return pics;
     }
 
-    public void setPics1(String[] pics1) {
-        this.pics1 = pics1;
+    public void setPics(List<Pic> pics) {
+        this.pics = pics;
     }
 
     private String servicetel;
@@ -158,5 +159,19 @@ public class MachineInfoModel implements Serializable {
                 ", opentime='" + opentime + '\'' +
                 ", endflag='" + endflag + '\'' +
                 '}';
+    }
+
+    public class Pic {
+        String pic;
+
+        public String getPic() {
+            return pic;
+        }
+
+        public void setPic(String pic) {
+            this.pic = pic;
+        }
+
+
     }
 }

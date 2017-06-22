@@ -347,10 +347,11 @@
             android:id="@+id/barber2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y155"
-            android:background="@color/colorBackground"
-            android:visibility="visible"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/barber1"
-            android:layout_alignParentStart="true">
+            android:layout_marginTop="@dimen/y5"
+            android:background="@color/colorBackground"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="@dimen/x155"
@@ -445,19 +446,34 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/x22"/>
         </RelativeLayout>
+        <!--
+                <View
+                    android:id="@+id/shiping"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y358"
+                    android:layout_below="@id/barber2"
+                    android:layout_marginTop="@dimen/y5"
+                    android:background="@color/colorLine"/>-->
 
-        <View
-            android:id="@+id/shiping"
+        <RelativeLayout
+            android:id="@+id/lyt_show_area"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y358"
-            android:layout_below="@id/barber2"
-            android:layout_marginTop="@dimen/y5"
-            android:background="@color/colorLine"/>
+            android:layout_below="@id/barber2">
+
+            <com.youth.banner.Banner
+                android:id="@+id/ad_banner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/y5"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/shiping">
+            android:layout_below="@+id/lyt_show_area">
 
             <FrameLayout
                 android:layout_width="wrap_content"
