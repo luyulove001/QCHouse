@@ -39,116 +39,122 @@
         android:background="@color/colorLine"/>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="@dimen/x287"
-        android:layout_height="@dimen/y218"
+        android:id="@+id/lyt_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view_line"
-        android:layout_marginStart="@dimen/x85"
-        android:layout_marginTop="@dimen/y20"
-        >
+        android:paddingBottom="@dimen/y10">
 
-        <LinearLayout
-            android:id="@+id/lyt_shopname"
-            android:layout_width="@dimen/x130"
-            android:layout_height="@dimen/y130"
-            android:background="@drawable/bg_shop">
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="@dimen/x287"
+            android:layout_height="@dimen/y218"
+            android:layout_marginStart="@dimen/x85"
+            android:layout_marginTop="@dimen/y20"
+            >
 
-            <TextView
-                android:id="@+id/tv_shopname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x80"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/white_fafaf8"
-                android:textSize="@dimen/x20"/>
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lyt_shopname"
+                android:layout_width="@dimen/x130"
+                android:layout_height="@dimen/y130"
+                android:background="@drawable/bg_shop">
 
-        <ImageView
-            android:id="@+id/shop_qrcode"
-            android:layout_width="@dimen/x130"
-            android:layout_height="@dimen/y130"
-            android:layout_alignParentEnd="true"
-            android:background="@color/blue_btn_bg_color"/>
-
-        <LinearLayout
-            android:id="@+id/lyt_shop_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/shop_qrcode"
-            android:layout_marginTop="@dimen/y10"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_shopname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x90"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white_fafaf8"
+                    android:textSize="@dimen/x18"/>
+            </LinearLayout>
 
             <ImageView
-                android:id="@+id/iv_rmb"
-                android:layout_width="@dimen/x35"
-                android:layout_height="@dimen/y35"
-                android:src="@drawable/icon_clock"/>
+                android:id="@+id/shop_qrcode"
+                android:layout_width="@dimen/x130"
+                android:layout_height="@dimen/y130"
+                android:layout_alignParentEnd="true"
+                android:background="@color/blue_btn_bg_color"/>
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/lyt_shop_price"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x15"
+                android:layout_below="@+id/shop_qrcode"
+                android:layout_marginTop="@dimen/y10"
                 android:gravity="center"
-                android:text="@string/price"/>
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lyt_shop_price"
-            android:layout_marginTop="@dimen/x10"
-            android:gravity="center"
-            android:text="@string/scan"
-            android:textColor="@color/red_btn_bg_color"
-            android:textSize="@dimen/x25"/>
+                <ImageView
+                    android:id="@+id/iv_rmb"
+                    android:layout_width="@dimen/x35"
+                    android:layout_height="@dimen/y35"
+                    android:src="@drawable/icon_clock"/>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/lyt_active"
-        android:layout_width="@dimen/x390"
-        android:layout_height="@dimen/y218"
-        android:layout_below="@+id/view_line"
-        android:layout_marginStart="@dimen/x20"
-        android:layout_marginTop="@dimen/y20"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_active"
-            android:layout_width="@dimen/x250"
-            android:layout_height="@dimen/y218"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/linearLayout"
-            android:src="@drawable/active"/>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="@dimen/x150"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:background="@color/warning_stroke_color"
-            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/x15"
+                    android:gravity="center"
+                    android:text="@string/price"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x40"
+                android:layout_below="@+id/lyt_shop_price"
+                android:layout_marginTop="@dimen/x10"
                 android:gravity="center"
                 android:text="@string/scan"
-                android:textColor="@color/biz_audio_progress_bg"
-                android:textSize="@dimen/x13"/>
+                android:textColor="@color/red_btn_bg_color"
+                android:textSize="@dimen/x25"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lyt_active"
+            android:layout_width="@dimen/x390"
+            android:layout_height="@dimen/y218"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginTop="@dimen/y20"
+            android:visibility="gone">
 
             <ImageView
-                android:id="@+id/active_qrcode"
-                android:layout_width="@dimen/x115"
-                android:layout_height="@dimen/y115"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/y20"
-                android:background="@color/blue_btn_bg_color"/>
-        </LinearLayout>
+                android:id="@+id/iv_active"
+                android:layout_width="@dimen/x250"
+                android:layout_height="@dimen/y218"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/linearLayout"
+                android:src="@drawable/active"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="@dimen/x150"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@color/warning_stroke_color"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x40"
+                    android:gravity="center"
+                    android:text="@string/scan"
+                    android:textColor="@color/biz_audio_progress_bg"
+                    android:textSize="@dimen/x13"/>
+
+                <ImageView
+                    android:id="@+id/active_qrcode"
+                    android:layout_width="@dimen/x115"
+                    android:layout_height="@dimen/y115"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/y20"
+                    android:background="@color/blue_btn_bg_color"/>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -228,7 +234,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lyt_work_time"
+        android:layout_below="@+id/lyt_head"
         android:layout_marginTop="@dimen/y10"
         android:background="@color/colorRelativeLayout">
 
@@ -247,7 +253,7 @@
                 android:layout_alignParentTop="true"
                 android:background="@color/colorHead">
 
-                <ImageView
+                <talex.zsw.baselibrary.widget.CircleImageView
                     android:id="@+id/headpic1"
                     android:layout_width="@dimen/x88"
                     android:layout_height="@dimen/y88"
@@ -264,6 +270,7 @@
                     android:src="@drawable/gold"/>
 
                 <TextView
+                    android:id="@+id/haircut_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/headpic1"
@@ -340,17 +347,17 @@
             android:id="@+id/barber2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y155"
-            android:layout_alignParentStart="true"
+            android:background="@color/colorBackground"
+            android:visibility="visible"
             android:layout_below="@+id/barber1"
-            android:layout_marginTop="@dimen/y5"
-            android:background="@color/colorBackground">
+            android:layout_alignParentStart="true">
 
             <RelativeLayout
                 android:layout_width="@dimen/x155"
                 android:layout_height="@dimen/y155"
                 android:background="@color/colorHead">
 
-                <ImageView
+                <talex.zsw.baselibrary.widget.CircleImageView
                     android:id="@+id/headpic2"
                     android:layout_width="@dimen/x88"
                     android:layout_height="@dimen/y88"
@@ -501,7 +508,7 @@
 
                 <View
                     android:layout_width="@dimen/x5"
-                    android:layout_height="@dimen/y90"
+                    android:layout_height="@dimen/y150"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/y225"
                     android:background="@color/color_comment"/>
@@ -536,14 +543,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorRed"
+                    android:textSize="@dimen/x25"/>
 
                 <TextView
                     android:id="@+id/hair_disc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/x25"/>
 
             </LinearLayout>
 
@@ -570,14 +580,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/color_good"
+                    android:textSize="@dimen/x25"/>
 
                 <TextView
                     android:id="@+id/good_disc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/x25"/>
 
             </LinearLayout>
 
@@ -603,14 +616,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/color_bad"
+                    android:textSize="@dimen/x25"/>
 
                 <TextView
                     android:id="@+id/bad_disc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/x25"/>
 
             </LinearLayout>
 
@@ -636,14 +652,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/color_comment"
+                    android:textSize="@dimen/x25"/>
 
                 <TextView
                     android:id="@+id/comment_disc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/x25"/>
 
             </LinearLayout>
 

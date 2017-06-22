@@ -36,17 +36,4 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
 
     }
-
-    private void updateUseState(String sn) {
-        OkGo.get("http://106.15.61.209:7881/plazz/api/qchapi/" + "getShopMachineInfo")
-                .tag(this)
-                .params("token", "1234567890")
-                .params("sn", sn)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(String string, Call call, Response response) {
-                        KLog.i(string + "  " + response.toString());
-                    }
-                });
-    }
 }

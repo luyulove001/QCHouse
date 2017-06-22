@@ -55,20 +55,119 @@ public class HairdresserInfoModel implements Serializable {
         this.lst = lst;
     }
 
-    private class Cmt {
+    public class Cmt {
         private String bn;
         private String t;
         private String cn;
         private String tp;
+
+        public String getBn() {
+            return bn;
+        }
+
+        public void setBn(String bn) {
+            this.bn = bn;
+        }
+
+        public String getT() {
+            return t;
+        }
+
+        public void setT(String t) {
+            this.t = t;
+        }
+
+        public String getCn() {
+            return cn;
+        }
+
+        public void setCn(String cn) {
+            this.cn = cn;
+        }
+
+        public String getTp() {
+            return tp;
+        }
+
+        public void setTp(String tp) {
+            this.tp = tp;
+        }
+
+        public String getM() {
+            return m;
+        }
+
+        public void setM(String m) {
+            this.m = m;
+        }
+
+        private String m;
     }
 
-    private class DresserInfo {
+    public class DresserInfo {
         private String headpic;
         private String wcnt;
         private String barberid;
         private String grade;
         private String queueno;
         private String realname;
+
+        public String getHeadpic() {
+            return headpic;
+        }
+
+        public void setHeadpic(String headpic) {
+            this.headpic = headpic;
+        }
+
+        public String getWcnt() {
+            return wcnt;
+        }
+
+        public void setWcnt(String wcnt) {
+            this.wcnt = wcnt;
+        }
+
+        public String getBarberid() {
+            return barberid;
+        }
+
+        public void setBarberid(String barberid) {
+            this.barberid = barberid;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getQueueno() {
+            return queueno;
+        }
+
+        public void setQueueno(String queueno) {
+            this.queueno = queueno;
+        }
+
+        public String getRealname() {
+            return realname;
+        }
+
+        public void setRealname(String realname) {
+            this.realname = realname;
+        }
+
+        public String getChktime() {
+            return chktime;
+        }
+
+        public void setChktime(String chktime) {
+            this.chktime = chktime;
+        }
+
         private String chktime;
     }
 }

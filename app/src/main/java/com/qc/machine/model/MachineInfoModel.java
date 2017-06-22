@@ -11,6 +11,52 @@ public class MachineInfoModel implements Serializable {
     private String shopid;
     private String sn;
     private String actpic;
+    private String actprice;
+    private String price;
+    private String findBy;
+    private String mid;
+    private String[] pics1;
+
+    public String getActprice() {
+        return actprice;
+    }
+
+    public void setActprice(String actprice) {
+        this.actprice = actprice;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getFindBy() {
+        return findBy;
+    }
+
+    public void setFindBy(String findBy) {
+        this.findBy = findBy;
+    }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
+    public String[] getPics1() {
+        return pics1;
+    }
+
+    public void setPics1(String[] pics1) {
+        this.pics1 = pics1;
+    }
+
     private String servicetel;
     private String adtype;
     private String validsts;
