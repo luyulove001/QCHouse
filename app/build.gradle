@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.pc.machine"
+        applicationId "com.qc.machine"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -33,5 +33,7 @@ dependencies {
     compile 'com.lzy.net:okserver:1.1.3'
     compile 'com.youth.banner:banner:1.4.9'
     testCompile 'junit:junit:4.12'
+    compile 'com.danikula:videocache:2.7.0'
     compile project(':baselibrary')
+    compile files('libs/zxingcore.jar')
 }

@@ -1,25 +1,36 @@
 package com.qc.machine.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.request.BaseRequest;
 import com.qc.machine.R;
 import com.qc.machine.base.BaseActivity;
+import com.qc.machine.base.BaseApplication;
 import com.qc.machine.model.HairdresserInfoModel;
 import com.qc.machine.model.MachineInfoModel;
 import com.qc.machine.utils.AsyncImageLoader;
+import com.qc.machine.utils.BitmapQRUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -27,6 +38,7 @@ import com.youth.banner.Transformer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,8 +50,8 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 import talex.zsw.baselibrary.util.klog.KLog;
-import talex.zsw.baselibrary.view.JCVideoPlayer.JCVideoPlayer;
 import talex.zsw.baselibrary.widget.CircleImageView;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -57,6 +69,8 @@ public class MainActivity extends BaseActivity {
     ImageView ivActiveQrcode;
     @Bind(R.id.lyt_active)
     RelativeLayout lytActive;
+    @Bind(R.id.lyt_normal)
+    RelativeLayout lytNormal;
     @Bind(R.id.tv_sn)
     TextView tvSn;
     @Bind(R.id.tv_time)
@@ -109,11 +123,21 @@ public class MainActivity extends BaseActivity {
     TextView tvCommentDisc;
     @Bind(R.id.ad_banner)
     Banner banner;
-//    @Bind(R.id.ad_player)
-//    JCVideoPlayer player;
+    @Bind(R.id.ad_player)
+    VideoView player;
+    @Bind(R.id.lyt_head)
+    RelativeLayout lytHead;
+    @Bind(R.id.barber2)
+    RelativeLayout lytBaber2;
+    @Bind(R.id.lyt_show_area)
+    RelativeLayout lytShowArea;
+    @Bind(R.id.lyt_comment)
+    RelativeLayout lytComment;
 
     private String mShopId;
     private String mSn;
+    private String headpic1 = "", headpic2 = "";
+    private Bitmap bitmap;
 
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
@@ -121,27 +145,93 @@ public class MainActivity extends BaseActivity {
             switch (msg.what) {
                 case 1:
                     MachineInfoModel model = (MachineInfoModel) msg.obj;
-                    KLog.d("msg.what  " + model.toString());
                     if ("1".equals(model.getValidsts())) {
                         if ("0".equals(model.getEndflag()) || "2".equals(model.getEndflag())) {
+                            lytNormal.setVisibility(View.VISIBLE);
+                            lytActive.setVisibility(View.GONE);
                             tvPrice.setText(model.getPrice());
-                            //TODO 生成对应价格二维码
+                            bitmap = BitmapQRUtils.generateQRCode(getPayUrl(mSn, model.getPrice()));
+                            ivShopQrcode.setImageBitmap(bitmap);
                         } else if ("1".equals(model.getEndflag())) {
+                            lytActive.setVisibility(View.VISIBLE);
+                            lytNormal.setVisibility(View.GONE);
+                            bitmap = BitmapQRUtils.generateQRCode(getPayUrl(mSn, model.getActprice()));
+                            ivActiveQrcode.setImageBitmap(bitmap);
+                            Glide.with(getApplicationContext()).load(model.getActpic()).into(ivActive);
                         }
                         if ("1".equals(model.getAdtype())) {
-                            banner.setVisibility(View.VISIBLE);
-                            banner.setImages(model.getPics());
-                            banner.start();
+                            //                            banner.setVisibility(View.VISIBLE);
+                            //                            player.setVisibility(View.GONE);
+                            //                            banner.setImages(model.getPics());
+                            //                            banner.start();
+                            player.setVisibility(View.VISIBLE);
+                            String url = "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4";
+                            String fileName = "/sdcard/QCMachine/" + url.substring(url.lastIndexOf("/") + 1);
+                            File f = new File(fileName);
+                            if (f.exists()) {
+                                final Uri videoUri = Uri.parse(fileName);
+                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        player.setVideoURI(videoUri);
+                                        player.start();
+                                    }
+                                });
+                                player.setVideoURI(videoUri);
+                                player.start();
+                            } else {
+                                HttpProxyCacheServer proxy = BaseApplication.getProxy(MainActivity.this);
+                                final String proxyUrl = proxy.getProxyUrl(url);
+                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        player.setVideoPath(proxyUrl);
+                                        player.start();
+                                    }
+                                });
+                                player.setVideoPath(proxyUrl);
+                                player.start();
+                                downloadMp4(url);
+                            }
                         } else if ("2".equals(model.getAdtype())) {
-                            //TODO 视频
+                            player.setVisibility(View.VISIBLE);
+                            banner.setVisibility(View.GONE);
+                            String url = model.getVideourl();
+                            String fileName = "/sdcard/QCMachine/" + url.substring(url.lastIndexOf("/") + 1);
+                            File f = new File(fileName);
+                            if (f.exists()) {
+                                final Uri videoUri = Uri.parse(fileName);
+                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        player.setVideoURI(videoUri);
+                                        player.start();
+                                    }
+                                });
+                                player.setVideoURI(videoUri);
+                                player.start();
+                            } else {
+                                HttpProxyCacheServer proxy = BaseApplication.getProxy(MainActivity.this);
+                                final String proxyUrl = proxy.getProxyUrl(url);
+                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        player.setVideoPath(proxyUrl);
+                                        player.start();
+                                    }
+                                });
+                                player.setVideoPath(proxyUrl);
+                                player.start();
+                                downloadMp4(url);
+                            }
                         }
                         tvShopname.setText(model.getShopname());
                         tvWorkTime.setText(model.getOpentime());
                         tvHotline.setText(model.getServicetel());
                         mSn = model.getSn();
-                        tvSn.setText(mSn);
+                        tvSn.setText(String.format(getResources().getString(R.string.sn), mSn));
                         mShopId = model.getShopid();
-                        timer.schedule(task, 1000, 10000);
+                        timer.schedule(task, 0, 10000);
                     } else if ("0".equals(model.getValidsts())) {
                         Toast.makeText(MainActivity.this, "秘钥已过期，请重新充值", Toast.LENGTH_SHORT).show();
                     }
@@ -156,27 +246,47 @@ public class MainActivity extends BaseActivity {
                     tvBadDisc.setText("顾客" + model1.getCmt1().getCn() + "给" + model1.getCmt2().getBn() + "理发师差评");
                     tvCommentTime.setText(model1.getCmt4().getT());
                     tvCommentDisc.setText("顾客" + model1.getCmt4().getCn() + "评价" + model1.getCmt4().getBn() + ":" +
-                            model1.getCmt4().getM());
+                            model1.getCmt4().getM() + "礼金啊六点十分捡垃圾打飞机案例三等奖法拉盛");
 
+
+                    if (model1.getLst().size() == 1) {
+                        lytBaber2.setVisibility(View.GONE);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) lytHead.getLayoutParams();
+                        params.bottomMargin = (int) getResources().getDimension(R.dimen.y20);
+                        lytHead.setLayoutParams(params);
+                        params = (RelativeLayout.LayoutParams) lytShowArea.getLayoutParams();
+                        params.height = (int) getResources().getDimension(R.dimen.y428);
+                        params.topMargin = (int) getResources().getDimension(R.dimen.y20);
+                        lytShowArea.setLayoutParams(params);
+                        params = (RelativeLayout.LayoutParams) lytComment.getLayoutParams();
+                        params.topMargin = (int) getResources().getDimension(R.dimen.y30);
+                        lytComment.setLayoutParams(params);
+                    }
 
                     switch (model1.getLst().size()) {
                         case 4:
-                            KLog.i("3");
+                            msg.what = 4;
+                            mHandler.sendMessageDelayed(msg, 5000);
+                            break;
                         case 3:
-                            KLog.i("2");
+                            msg.what = 3;
+                            mHandler.sendMessageDelayed(msg, 5000);
+                            break;
                         case 2:
-                            AsyncImageLoader.setImageViewFromUrl(model1.getLst().get(1).getHeadpic(), ivHeadpic2);
-                            tvCurrentNum2.setText(model1.getLst().get(1).getWcnt());
-                            tvQueueNum2.setText(model1.getLst().get(1).getQueueno());
-                            tvTime2.setText(model1.getLst().get(1).getChktime());
-                            setGradeImage(model1, 1, lv2);
+                            showCuterTwo(model1, 1);
                         case 1:
-                            AsyncImageLoader.setImageViewFromUrl(model1.getLst().get(0).getHeadpic(), ivHeadpic1);
-                            tvCurrentNum1.setText(model1.getLst().get(0).getWcnt());
-                            tvQueueNum1.setText(model1.getLst().get(0).getQueueno());
-                            tvTime1.setText(model1.getLst().get(0).getChktime());
-                            setGradeImage(model1, 0, lv1);
+                            showCuterOne(model1, 0);
                     }
+                    break;
+                case 3:
+                    HairdresserInfoModel model2 = (HairdresserInfoModel) msg.obj;
+                    showCuterOne(model2, 1);
+                    showCuterTwo(model2, 2);
+                    break;
+                case 4:
+                    HairdresserInfoModel model3 = (HairdresserInfoModel) msg.obj;
+                    showCuterOne(model3, 2);
+                    showCuterTwo(model3, 3);
                     break;
                 default:
                     break;
@@ -184,6 +294,56 @@ public class MainActivity extends BaseActivity {
             return true;
         }
     });
+
+    private void downloadMp4(String s) {
+        OkGo.get(s)
+                .tag(this)
+                .execute(new FileCallback("/sdcard/QCMachine/", s.substring(s.lastIndexOf("/") + 1)) {
+                    @Override
+                    public void onBefore(BaseRequest request) {
+                        KLog.d("正在下载中");
+                    }
+
+                    @Override
+                    public void onSuccess(File file, Call call, Response response) {
+                        KLog.d("下载完成---" + file.getAbsolutePath());
+                    }
+
+                    @Override
+                    public void downloadProgress(long currentSize, long totalSize, float progress, long networkSpeed) {
+                        System.out.println("downloadProgress -- " + totalSize + "  " + currentSize + "  " + progress
+                                + "  " + networkSpeed);
+                    }
+
+                    @Override
+                    public void onError(Call call, @Nullable Response response, @Nullable Exception e) {
+                        super.onError(call, response, e);
+                        KLog.d("下载出错");
+                    }
+                });
+    }
+
+    private void showCuterOne(HairdresserInfoModel model, int position) {
+        if (!headpic1.equals(model.getLst().get(position).getHeadpic())) {
+            Glide.with(getApplicationContext()).load(model.getLst().get(position).getHeadpic()).into(ivHeadpic1);
+            headpic1 = model.getLst().get(position).getHeadpic();
+        }
+        tvCurrentNum1.setText(model.getLst().get(position).getWcnt());
+        tvQueueNum1.setText(model.getLst().get(position).getQueueno());
+        tvTime1.setText(model.getLst().get(position).getChktime());
+        setGradeImage(model, position, lv1);
+    }
+
+    private void showCuterTwo(HairdresserInfoModel model, int position) {
+        if (!headpic2.equals(model.getLst().get(position).getHeadpic())) {
+            Glide.with(getApplicationContext()).load(model.getLst().get(position).getHeadpic()).into(ivHeadpic2);
+            headpic2 = model.getLst().get(position).getHeadpic();
+        }
+        tvCurrentNum2.setText(model.getLst().get(position).getWcnt());
+        tvQueueNum2.setText(model.getLst().get(position).getQueueno());
+        tvTime2.setText(model.getLst().get(position).getChktime());
+        setGradeImage(model, position, lv2);
+    }
 
     private void setGradeImage(HairdresserInfoModel model1, int position, ImageView lv) {
         switch (model1.getLst().get(position).getGrade()) {
@@ -210,7 +370,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initArgs(Intent intent) {
-
+        getMachineInfo(intent.getStringExtra("sn"));
     }
 
     @Override
@@ -236,7 +396,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         tvTime.setText(getNowTime());
-        getMachineInfo("100009");
     }
 
     private void setRingColor(View ring, int color) {
@@ -250,6 +409,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        OkGo.getInstance().cancelTag(this);
         // ImmersionBar.with(this).destroy();  //不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
     }
 
@@ -267,14 +427,12 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String string, Call call, Response response) {
-                        KLog.i(string + "  " + response.toString());
                         try {
                             JSONObject jsonObject = new JSONObject(string);
                             if ("100000".equals(jsonObject.getString("code"))) {
                                 String str = jsonObject.getString("data");
                                 Gson gson = new Gson();
                                 HairdresserInfoModel model = gson.fromJson(str, HairdresserInfoModel.class);
-                                KLog.d(model.toString());
                                 Message msg = new Message();
                                 msg.what = 2;
                                 msg.obj = model;
@@ -298,14 +456,12 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String string, Call call, Response response) {
-                        KLog.i(string + "  " + response.toString());
                         try {
                             JSONObject jsonObject = new JSONObject(string);
                             if ("100000".equals(jsonObject.getString("code"))) {
                                 String str = jsonObject.getString("data");
                                 Gson gson = new Gson();
                                 MachineInfoModel model = gson.fromJson(str, MachineInfoModel.class);
-                                KLog.d(model.toString());
                                 Message msg = new Message();
                                 msg.what = 1;
                                 msg.obj = model;
@@ -319,5 +475,9 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    public String getPayUrl(String sn, String amount) {
+        return "http://km.qchouses.com?sn=" + sn + "&amount=" + amount;
     }
 }

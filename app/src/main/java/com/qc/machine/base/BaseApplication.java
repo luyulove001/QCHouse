@@ -2,6 +2,9 @@ package com.qc.machine.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+
+import com.danikula.videocache.HttpProxyCacheServer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +21,16 @@ public class BaseApplication extends Application {
         super.onCreate();
         KLog.init(true);//初始化KLog
     }
+    private HttpProxyCacheServer proxy;
 
+    public static HttpProxyCacheServer getProxy(Context context) {
+        BaseApplication app = (BaseApplication) context.getApplicationContext();
+        return app.proxy == null ? (app.proxy = app.newProxy()) : app.proxy;
+    }
+
+    private HttpProxyCacheServer newProxy() {
+        return new HttpProxyCacheServer(this);
+    }
 
     public void addActivity(Activity activity) {
         activityList.add(activity);

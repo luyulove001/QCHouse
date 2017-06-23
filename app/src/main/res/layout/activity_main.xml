@@ -46,7 +46,7 @@
         android:paddingBottom="@dimen/y10">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/lyt_normal"
             android:layout_width="@dimen/x287"
             android:layout_height="@dimen/y218"
             android:layout_marginStart="@dimen/x85"
@@ -478,6 +478,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/lyt_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/lyt_show_area">
