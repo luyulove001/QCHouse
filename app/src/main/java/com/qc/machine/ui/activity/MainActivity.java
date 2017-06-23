@@ -160,39 +160,10 @@ public class MainActivity extends BaseActivity {
                             Glide.with(getApplicationContext()).load(model.getActpic()).into(ivActive);
                         }
                         if ("1".equals(model.getAdtype())) {
-                            //                            banner.setVisibility(View.VISIBLE);
-                            //                            player.setVisibility(View.GONE);
-                            //                            banner.setImages(model.getPics());
-                            //                            banner.start();
-                            player.setVisibility(View.VISIBLE);
-                            String url = "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4";
-                            String fileName = "/sdcard/QCMachine/" + url.substring(url.lastIndexOf("/") + 1);
-                            File f = new File(fileName);
-                            if (f.exists()) {
-                                final Uri videoUri = Uri.parse(fileName);
-                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                    @Override
-                                    public void onCompletion(MediaPlayer mp) {
-                                        player.setVideoURI(videoUri);
-                                        player.start();
-                                    }
-                                });
-                                player.setVideoURI(videoUri);
-                                player.start();
-                            } else {
-                                HttpProxyCacheServer proxy = BaseApplication.getProxy(MainActivity.this);
-                                final String proxyUrl = proxy.getProxyUrl(url);
-                                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                    @Override
-                                    public void onCompletion(MediaPlayer mp) {
-                                        player.setVideoPath(proxyUrl);
-                                        player.start();
-                                    }
-                                });
-                                player.setVideoPath(proxyUrl);
-                                player.start();
-                                downloadMp4(url);
-                            }
+                            banner.setVisibility(View.VISIBLE);
+                            player.setVisibility(View.GONE);
+                            banner.setImages(model.getPics());
+                            banner.start();
                         } else if ("2".equals(model.getAdtype())) {
                             player.setVisibility(View.VISIBLE);
                             banner.setVisibility(View.GONE);
@@ -246,9 +217,7 @@ public class MainActivity extends BaseActivity {
                     tvBadDisc.setText("顾客" + model1.getCmt1().getCn() + "给" + model1.getCmt2().getBn() + "理发师差评");
                     tvCommentTime.setText(model1.getCmt4().getT());
                     tvCommentDisc.setText("顾客" + model1.getCmt4().getCn() + "评价" + model1.getCmt4().getBn() + ":" +
-                            model1.getCmt4().getM() + "礼金啊六点十分捡垃圾打飞机案例三等奖法拉盛");
-
-
+                            model1.getCmt4().getM());
                     if (model1.getLst().size() == 1) {
                         lytBaber2.setVisibility(View.GONE);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) lytHead.getLayoutParams();
@@ -262,7 +231,6 @@ public class MainActivity extends BaseActivity {
                         params.topMargin = (int) getResources().getDimension(R.dimen.y30);
                         lytComment.setLayoutParams(params);
                     }
-
                     switch (model1.getLst().size()) {
                         case 4:
                             msg.what = 4;
