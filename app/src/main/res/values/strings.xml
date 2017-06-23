@@ -5,4 +5,5 @@
     <string name="price">票价10元</string>
     <string name="scan">手机扫一扫，在线购票</string>
     <string name="hairdresser">理发师  %1$s </string>
+    <string name="sn">设备号：%1$s </string>
 </resources>

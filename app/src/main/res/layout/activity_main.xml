@@ -459,15 +459,22 @@
             android:id="@+id/lyt_show_area"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y358"
-            android:layout_below="@id/barber2">
+            android:layout_below="@id/barber2"
+            android:layout_marginTop="@dimen/y5">
 
             <com.youth.banner.Banner
                 android:id="@+id/ad_banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/y5"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
+            <VideoView
+                android:id="@+id/ad_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -678,6 +685,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x45"
                     android:text="@string/app_name"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:ellipsize="marquee"
+                    android:scrollHorizontally="true"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
                     android:textSize="@dimen/x25"/>
 
             </LinearLayout>
