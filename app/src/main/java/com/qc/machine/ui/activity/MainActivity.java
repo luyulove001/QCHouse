@@ -1,6 +1,9 @@
 package com.qc.machine.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -41,6 +44,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -350,6 +354,8 @@ public class MainActivity extends BaseActivity {
         setRingColor(ring3, getResources().getColor(R.color.color_bad));
         setRingColor(ring4, getResources().getColor(R.color.color_comment));
         initBanner();
+        IntentFilter filter = new IntentFilter(Intent.ACTION_TIME_TICK);
+        registerReceiver(timeReceiver, filter);
     }
 
     private void initBanner() {
@@ -378,6 +384,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         OkGo.getInstance().cancelTag(this);
+        unregisterReceiver(timeReceiver);
         // ImmersionBar.with(this).destroy();  //不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
     }
 
@@ -448,4 +455,14 @@ public class MainActivity extends BaseActivity {
     public String getPayUrl(String sn, String amount) {
         return "http://km.qchouses.com?sn=" + sn + "&amount=" + amount;
     }
+
+    private final BroadcastReceiver timeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_TIME_TICK)) {
+                tvTime.setText(getNowTime());
+            }
+        }
+    };
 }
